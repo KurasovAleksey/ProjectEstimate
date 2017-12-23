@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectEstimate.ViewModels
+namespace ProjectEstimate.Mongo
 {
-    public class ProjectInfoDto
+    public class TechnicalParameter
     {
-        public string Id { get; set; }
-
         public string Title { get; set; }
 
-        public string ApplicationDomain { get; set; }
+        public double Weight { get; set; }
+
+        public double Value { get; set; }
     }
 }

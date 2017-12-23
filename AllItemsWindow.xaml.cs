@@ -24,7 +24,7 @@ namespace ProjectEstimate
         public AllItemsWindow() 
         {
             InitializeComponent();
-            DataContext = new ProjectListInfoViewModel();
+            DataContext = new ProjectListInfoViewModel() { Context = new Mongo.DbContext() };
         }
 
     }

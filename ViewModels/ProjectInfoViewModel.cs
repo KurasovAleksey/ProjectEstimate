@@ -22,10 +22,6 @@ namespace ProjectEstimate.ViewModels
 
         public DbContext Context { get; set; }
 
-        Equipment currentEquipment;
-        Material currentMaterial;
-        Position currentPosition;
-
         public ProjectInfoViewModel(string projectId)
         {
             Project project;
@@ -52,9 +48,18 @@ namespace ProjectEstimate.ViewModels
                 = new ObservableCollection<Material>(project.Materials);
             this.Positions
                 = new ObservableCollection<Position>(project.Positions);
+            this.ExtraFeatures 
+                = new ObservableCollection<ExtraFeature>(project.ExtraFeatures);
+            this.Features 
+                = new ObservableCollection<Feature>(project.Features);
+            this.Functions 
+                = new ObservableCollection<Function>(project.Functions);
+            this.Marks 
+                = new ObservableCollection<Mark>(project.Marks);
+            this.TechnicalParameters 
+                = new ObservableCollection<TechnicalParameter>(project.TechnicalParameters);
             Estimate = project.Estimate ?? new Estimate();
-            Product = project.Product ?? new Product();
-            
+
 
         }
 
@@ -87,23 +92,18 @@ namespace ProjectEstimate.ViewModels
             }
         }
 
-        private Product product;
-        public Product Product
-        {
-            get
-            {
-                return product;
-            }
-            set
-            {
-                product = value;
-                NotifyPropertyChanged("Product");
-            }
-        }
-
         #region Datagrids
 
         #region DataGrid current values
+
+        Equipment currentEquipment;
+        Material currentMaterial;
+        Position currentPosition;
+        TechnicalParameter currentTechnicalParameter;
+        Function currentFunction;
+        Feature currentFeature;
+        ExtraFeature currentExtraFeature;
+        Mark currentMark;
 
         public Position CurrentPosition
         {
@@ -135,7 +135,68 @@ namespace ProjectEstimate.ViewModels
             }
         }
 
-       
+        public TechnicalParameter CurrentTechnicalParameter {
+            get
+            {
+                return currentTechnicalParameter;
+            }
+
+            set
+            {
+                currentTechnicalParameter = value;
+                NotifyPropertyChanged("CurrentTechnicalParameter");
+            }
+        }
+
+        public ExtraFeature CurrentExtraFeature {
+            get
+            {
+                return currentExtraFeature;
+            }
+
+            set
+            {
+                currentExtraFeature = value;
+            }
+        }
+
+        public Feature CurrentFeature {
+            get
+            {
+                return currentFeature;
+            }
+
+            set
+            {
+                currentFeature = value;
+            }
+        }
+
+        public Mark CurrentMark {
+            get
+            {
+                return currentMark;
+            }
+
+            set
+            {
+                currentMark = value;
+            }
+        }
+
+        public Function CurrentFunction {
+            get
+            {
+                return currentFunction;
+            }
+
+            set
+            {
+                currentFunction = value;
+            }
+        }
+
+
         #endregion DataGrid current values
 
         #region Equipment
@@ -251,6 +312,50 @@ namespace ProjectEstimate.ViewModels
         }
         #endregion MiltaryAccount
 
+        #region Function
+        public ObservableCollection<Function> Functions
+        {
+            get => Project.Functions as ObservableCollection<Function>;
+            set { Project.Functions = value; NotifyPropertyChanged("Functions"); }
+        }
+
+        #endregion
+
+        #region Feature
+        public ObservableCollection<Feature> Features
+        {
+            get => Project.Features as ObservableCollection<Feature>;
+            set { Project.Features = value; NotifyPropertyChanged("Features"); }
+        }
+
+        #endregion
+
+        #region ExtraFeature
+        public ObservableCollection<ExtraFeature> ExtraFeatures
+        {
+            get => Project.ExtraFeatures as ObservableCollection<ExtraFeature>;
+            set { Project.ExtraFeatures = value; NotifyPropertyChanged("ExtraFeatures"); }
+        }
+
+        #endregion
+
+        #region TechnicalParameter
+        public ObservableCollection<TechnicalParameter> TechnicalParameters
+        {
+            get => Project.TechnicalParameters as ObservableCollection<TechnicalParameter>;
+            set { Project.TechnicalParameters = value; NotifyPropertyChanged("TechnicalParameters"); }
+        }
+
+        #endregion
+
+        #region Mark
+        public ObservableCollection<Mark> Marks
+        {
+            get => Project.Marks as ObservableCollection<Mark>;
+            set { Project.Marks = value; NotifyPropertyChanged("Marks"); }
+        }
+
+        #endregion
 
         #endregion Datagrids
 
@@ -294,13 +399,123 @@ namespace ProjectEstimate.ViewModels
                 }
             }));
         }
-        public object _currentEquipment { get; private set; }
+       
+
         #endregion Buttons Commands
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        class FunctionChecker
+        {
+            public FunctionChecker(ProjectInfoViewModel parent, Function item, bool isChecked)
+            {
+                Item = item;
+                this.isChecked = isChecked;
+                this.parent = parent;
+            }
+
+            ProjectInfoViewModel parent;
+
+            public Function Item { get; set; }
+
+            bool isChecked;
+            public bool IsChecked {
+                get { return isChecked; }
+                set
+                {
+                    if (!isChecked)
+                    {
+                        parent.Project.Functions.Add(Item);
+                        parent.Project.LOC += Item.LOC;
+                        isChecked = true;
+                    } else
+                    {
+                        parent.Project.Functions.Remove(Item);
+                        parent.Project.LOC -= Item.LOC;
+                    }
+                }
+            }
+        }
+
+        class FeatureChecker
+        {
+            public FeatureChecker(ProjectInfoViewModel parent, Feature item, bool isChecked)
+            {
+                Item = item;
+                this.isChecked = isChecked;
+                this.parent = parent;
+            }
+
+            ProjectInfoViewModel parent;
+
+            public Feature Item { get; set; }
+
+            bool isChecked;
+            public bool IsChecked
+            {
+                get { return isChecked; }
+                set
+                {
+                    if (!isChecked)
+                    {
+                        parent.Project.Features.Add(Item);
+                        isChecked = true;
+                    }
+                    else
+                    {
+                        parent.Project.Features.Remove(Item);
+                    }
+                    CalculateCategory();
+                }
+            }
+
+            public void CalculateCategory()
+            {
+                int category = 3;
+                if (parent.Project.Features.Where(f => f.Category == 3).Any())
+                    category = 3;
+                if(parent.Project.Features.Where(f => f.Category == 2).Any())
+                    category = 2;
+                if (parent.Project.Features.Where(f => f.Category == 1).Any())
+                    category = 1;
+                parent.Project.Category = category;
+            }
+        }
+
+        class ExtraFeatureChecker
+        {
+            public ExtraFeatureChecker(ProjectInfoViewModel parent, ExtraFeature item, bool isChecked)
+            {
+                Item = item;
+                this.isChecked = isChecked;
+                this.parent = parent;
+            }
+
+            ProjectInfoViewModel parent;
+
+            public ExtraFeature Item { get; set; }
+
+            bool isChecked;
+            public bool IsChecked
+            {
+                get { return isChecked; }
+                set
+                {
+                    if (!isChecked)
+                    {
+                        parent.Project.ExtraFeatures.Add(Item);
+                        isChecked = true;
+                    }
+                    else
+                    {
+                        parent.Project.ExtraFeatures.Remove(Item);
+                    }
+                }
+            }
         }
 
     }

@@ -7,10 +7,12 @@ namespace ProjectEstimate
 
         ProjectInfoViewModel pivm;
 
-        public MainWindow(string projectId = null)
+        public string ProjectId { get; set; } = null;
+
+        public MainWindow()
         {
             InitializeComponent();
-            pivm = new ProjectInfoViewModel(projectId);
+            pivm = new ProjectInfoViewModel(ProjectId);
             DataContext = pivm;
         }
     }

@@ -72,8 +72,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Mongo\ExtraFeature.cs" />
+    <Compile Include="Mongo\Feature.cs" />
+    <Compile Include="Mongo\Function.cs" />
+    <Compile Include="Mongo\Mark.cs" />
+    <Compile Include="Mongo\Project.cs" />
     <Compile Include="Mongo\ProjectRepository.cs" />
+    <Compile Include="Mongo\TechnicalParameter.cs" />
     <Compile Include="Utils\CommandImpl.cs" />
+    <Compile Include="Utils\ProjectOption.cs" />
     <Compile Include="ViewModels\ProjectInfoDto.cs" />
     <Compile Include="ViewModels\ProjectInfoViewModel.cs" />
     <Compile Include="ViewModels\ProjectListInfoViewModel.cs" />
@@ -103,8 +110,6 @@
     <Compile Include="Mongo\Estimate.cs" />
     <Compile Include="Mongo\Material.cs" />
     <Compile Include="Mongo\Position.cs" />
-    <Compile Include="Mongo\Product.cs" />
-    <Compile Include="Mongo\Project.cs" />
     <Compile Include="Mongo\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

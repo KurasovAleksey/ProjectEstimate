@@ -60,10 +60,10 @@ namespace ProjectEstimate.ViewModels
             }));
         }
 
-        private CommandImpl addNewEmployee;
-        public CommandImpl AddNewEmployee
+        private CommandImpl addNewProject;
+        public CommandImpl AddNewProject
         {
-            get => addNewEmployee ?? (addNewEmployee = new CommandImpl(obj =>
+            get => addNewProject ?? (addNewProject = new CommandImpl(obj =>
             {
                 var window = new MainWindow();
                 window.Show();
@@ -81,7 +81,7 @@ namespace ProjectEstimate.ViewModels
                   {
                       if (SelectedItem != null)
                       {
-                          var window = new MainWindow(SelectedItem.Id);
+                          var window = new MainWindow() { ProjectId = SelectedItem.Id };
                           window.Show();
                       }
                   }));

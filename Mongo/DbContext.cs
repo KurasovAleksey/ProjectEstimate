@@ -24,6 +24,21 @@ namespace ProjectEstimate.Mongo
         {
             get => database.GetCollection<Project>("Projects");
         }
+
+        public IMongoCollection<Function> Functions
+        {
+            get => database.GetCollection<Function>("Functions");
+        }
+
+        public IMongoCollection<Feature> Features
+        {
+            get => database.GetCollection<Feature>("Features");
+        }
+
+        public IMongoCollection<ExtraFeature> ExtraFeatures
+        {
+            get => database.GetCollection<ExtraFeature>("ExtraFeatures");
+        }
     }
 }
 

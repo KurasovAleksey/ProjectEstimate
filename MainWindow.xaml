@@ -5,487 +5,200 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectEstimate"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" Loaded="Window_Loaded" >
-
-            
-    <ScrollViewer>
-        
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-
-            <!--Passport Data-->
-            <Grid Name="passportInfo" HorizontalAlignment="Stretch" >
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <TextBox Name="firstNameTextBox" Text="{Binding Path=Employee.FirstName}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="5,8" />
-                <TextBox Name="secondNameTextBox" Text="{Binding Path=Employee.Patronymic}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="1"  Margin="5, 8"/>
-
-                <TextBox Name="lastNameTextBox" Text="{Binding Path=Employee.LastName}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="5, 8"/>
-                <DatePicker Name="birthDayDatePicker" SelectedDate="{Binding Path=Employee.Birthday}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="2"  Margin="5, 8"/>
-
-                <TextBox Name="passSeriaTextBox"   Text="{Binding Path=Passport.Series}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="3" Margin="5, 8"/>
-                <TextBox Name="passNumberTextBox" Text="{Binding Path=Passport.Number}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="3"  Margin="5, 8"/>
-
-                <TextBox Name="takenByTextBox"  Text="{Binding Path=Passport.IssuingInstitution}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="4" Margin="5, 8" />
-                <DatePicker Name="dateOfTaken"  SelectedDate="{Binding Path=Passport.DateOfIssue}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="4" Margin="5, 8"/>
-
-                <TextBox Name="citizenShipTextBox"  Text="{Binding Path=Passport.Citizenship}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="5" Margin="5, 8" />
-
-                <Label Content="Имя" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
-                       Grid.Column="0" Grid.Row="1" Margin="5,8" />
-                <Label Content="Отчество" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
-                       Grid.Column="2" Grid.Row="1"  Margin="5, 8"/>
-
-                <Label Content="Фамилия"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
-                       Grid.Column="0" Grid.Row="2" Margin="5, 8"/>
-                <Label Content="Дата Рождения" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
-                       Grid.Column="2" Grid.Row="2"  Margin="5, 8"/>
-
-                <Label Content="Серия паспорта" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
-                       Grid.Column="0" Grid.Row="3" Margin="5, 8"/>
-                <Label Content="Номер паспорта" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="3"  Margin="5, 8"/>
-
-                <Label Content="Кем выдан" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="4" Margin="5, 8" />
-                <Label Content="Когда выдан" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="4" Margin="5, 8"/>
-
-                <Label Content="Гражданство" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="5" Margin="5, 8" />
-
-                <Label Content="Паспортные данные" Grid.ColumnSpan="2" VerticalContentAlignment="Center"
-                       TextBlock.FontSize="12" HorizontalContentAlignment="Left" Grid.Column="0" Grid.Row="0" Margin="60, 8" />
-
-            </Grid>
-
-            <Grid Name="requiredEmployeeInfo" HorizontalAlignment="Stretch">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Label Content="Дополнительные данные" Grid.ColumnSpan="3" VerticalContentAlignment="Center"
-                       TextBlock.FontSize="12" HorizontalContentAlignment="Left" Grid.Column="0" 
-                       Grid.Row="0" Margin="60, 8" />
-
-                <TextBox Name="identificationNumberTextBox" Text="{Binding Path=Employee.TIN}" VerticalContentAlignment="Center" 
-                         Grid.Column="1" Grid.Row="1" Margin="5,8" />
-                <TextBox Name="phoneNumberTextBox" Text="{Binding Path=Employee.ContactPhone}" VerticalContentAlignment="Center" 
-                         Grid.Column="1" Grid.Row="2"  Margin="5, 8"/>
-                <TextBox Name="workBookSeriaTextBox" Text="{Binding Path=Employee.EmploymentHistorySeries}" VerticalContentAlignment="Center" 
-                         Grid.Column="1" Grid.Row="3" Margin="5, 8"/>
-                <TextBox Name="workBookNumberTextBox" Text="{Binding Path=Employee.EmploymentHistoryNumber}" VerticalContentAlignment="Center" 
-                         Grid.Column="3" Grid.Row="3" Margin="5, 8"/>
-
-                <Label Content="ИНН" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
-                       Grid.Column="0" Grid.Row="1" Margin="5,8" />
-                <Label Content="Номер телефона" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="2"  Margin="5, 8"/>
-                <Label Content="Серия трудовой книги"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="3" Margin="5, 8"/>
-                <Label Content="Номер трудовой книги"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="3" Margin="5, 8"/>
-
-            </Grid>
-
-            <Grid Name="addressInfoByReg" HorizontalAlignment="Stretch">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <TextBox Name="countryTextBox" Text="{Binding Path=PassportAddress.Country}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="5,8" />
-                <TextBox Name="regionTextBox" Text="{Binding Path=PassportAddress.Region}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="1"  Margin="5, 8"/>
-
-                <TextBox Name="districtTextBox" Text="{Binding Path=PassportAddress.District}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="5, 8"/>
-                <TextBox Name="cityTextBox" Text="{Binding Path=PassportAddress.City}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="2"  Margin="5, 8"/>
-
-                <TextBox Name="streetTextBox" Text="{Binding Path=PassportAddress.Street}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="3" Margin="5, 8"/>
-                <TextBox Name="houseTextBox" Text="{Binding Path=PassportAddress.Home}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="3"  Margin="5, 8"/>
-
-                <TextBox Name="appartmentTextBox" Text="{Binding Path=PassportAddress.Flat}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="4" Margin="5, 8" />
-                <TextBox Name="postIndexTextBox" Text="{Binding Path=PassportAddress.PostalCode}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="4" Margin="5, 8"/>
-
-                <CheckBox Content="Aдрес регистрации совпадает с фактическим местом проживания" 
-                          Name="isAddressesEqual" Grid.Row="5" Grid.Column="1"
-                          Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalContentAlignment="Left"
-                          IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-
-                <Label Content="Страна" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
-                       Grid.Column="0" Grid.Row="1" Margin="5,8" />
-                <Label Content="Область" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="1"  Margin="5, 8"/>
-
-                <Label Content="Район"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="2" Margin="5, 8"/>
-                <Label Content="Город" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="2"  Margin="5, 8"/>
-
-                <Label Content="Улица" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="3" Margin="5, 8"/>
-                <Label Content="Дом" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="3"  Margin="5, 8"/>
-
-                <Label Content="Квартира" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="4" Margin="5, 8" />
-                <Label Content="Почтовый индекс" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="4" Margin="5, 8"/>
-
-                <Label Content="Aдрессные данные (Регистрация)" Grid.ColumnSpan="3" VerticalContentAlignment="Center"
-                       TextBlock.FontSize="12" HorizontalContentAlignment="Left" Grid.Column="0" Grid.Row="0" Margin="60, 8" />
-
-            </Grid>
-
-            <Grid Name="addressInfoByFact" HorizontalAlignment="Stretch">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                    <RowDefinition Height="40" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <TextBox Name="countryFactTextBox" Text="{Binding Path=HomeAddress.Country}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="5,8" />
-                <TextBox Name="regionFactTextBox" Text="{Binding Path=HomeAddress.Region}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="1"  Margin="5, 8"/>
-
-                <TextBox Name="districtFactTextBox" Text="{Binding Path=HomeAddress.District}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="5, 8"/>
-                <TextBox Name="cityFactTextBox" Text="{Binding Path=HomeAddress.City}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="2"  Margin="5, 8"/>
-
-                <TextBox Name="streetFactTextBox" Text="{Binding Path=HomeAddress.Street}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="3" Margin="5, 8"/>
-                <TextBox Name="houseFactTextBox" Text="{Binding Path=HomeAddress.Home}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="3"  Margin="5, 8"/>
-
-                <TextBox Name="appartmentFactTextBox" Text="{Binding Path=HomeAddress.Flat}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="4" Margin="5, 8" />
-                <TextBox Name="postIndexFactTextBox" Text="{Binding Path=HomeAddress.PostalCode}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="4" Margin="5, 8"/>
-
-                <Label Content="Страна" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="1" Margin="5,8" />
-                <Label Content="Область" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="1"  Margin="5, 8"/>
-
-                <Label Content="Район"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="2" Margin="5, 8"/>
-                <Label Content="Город" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="2"  Margin="5, 8"/>
-
-                <Label Content="Улица" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="3" Margin="5, 8"/>
-                <Label Content="Дом" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="3"  Margin="5, 8"/>
-
-                <Label Content="Квартира" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="4" Margin="5, 8" />
-                <Label Content="Почтовый индекс" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="4" Margin="5, 8"/>
-
-                <Label Content="Aдрессные данные (Фактические)" VerticalContentAlignment="Center"
-                       Grid.ColumnSpan="3" TextBlock.FontSize="12" 
-                       HorizontalContentAlignment="Left" Grid.Column="0" Grid.Row="0" Margin="60, 8" />
-
-            </Grid>
-
-            <Border Padding="60, 10">
-                <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
-
-                    <Label Content="Должность" />
-                    <Grid Margin="0, 10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                            <RowDefinition Height="40"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="210"/>
-                            <ColumnDefinition Width="150"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Content="Наименование" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0" />
-                        <Label Content="Премия" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="1" />
-                        <Label Content="Дата заступления" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="2"/>
-
-                        <ComboBox Name = "positionComboBox" SelectedItem="{Binding CurrentPosition.Position}"
-                                            DisplayMemberPath="Title"
-                                            SelectedValuePath="Title"
-                                            ItemsSource="{Binding PositionsTypes}" 
-                                  Grid.Column="1" Grid.Row="0" Margin="5, 8" VerticalContentAlignment="Center" />
-                        <TextBox Name = "bonusTextBox" Text="{Binding CurrentPosition.Bonus}"  Grid.Column="1" Grid.Row="1" Margin="5, 8" VerticalContentAlignment="Center" />
-                        <DatePicker Name = "occupationDatePicker" SelectedDate="{Binding CurrentPosition.OccupationDate}" Grid.Column="1" Grid.Row="2" Margin="5, 8"  VerticalContentAlignment="Center"/>
-
-                    </Grid>
-
-                    <Label Content="Образование" />
-                    <DataGrid Name="educationDataGrid" CanUserAddRows="False" 
-                              ItemsSource="{Binding EmployeeEducations, Mode=TwoWay}"
-                              SelectedItem="{Binding CurrentEducation}"
-                              HorizontalAlignment="Stretch" Height="200" Margin="0, 10" 
-                              AutoGenerateColumns="False">
-                        
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding DiplomaNumber}" Header="Диплом" Width="*"/> 
-                            <DataGridTextColumn Binding="{Binding Institution}" Header="ВУЗ" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding Faculty}" Header="Факультет" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding Department}" Header="Кафедра"   Width="*"/>
-                            <DataGridTextColumn Binding="{Binding Speciality}" Header="Специальность" Width="*"/> 
-                        </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Command="{Binding RemoveEducationCommand}" Header="Удалить"/>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
-                        
-                    </DataGrid>
-                    <Button Command="{Binding AddEducationCommand}">Добавить образование</Button>
-
-                    <Label Content="Служба" />
-                    <DataGrid Name="militaryDataGrid" 
-                              CanUserAddRows="False" 
-                              HorizontalAlignment="Stretch"
-                              Height="200" Margin="0, 10"
-                              ItemsSource ="{Binding MilitaryAccounts, Mode=TwoWay}"
-                              SelectedItem="{Binding CurrentAccount}"
-                              AutoGenerateColumns="False">
-                        
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Ранг" Binding="{Binding Rank}" Width="*"/>
-                            <DataGridTextColumn Header="Звание" Binding="{Binding Position}" Width="*"/>
-                           
-                            <!-- Introduce datepicker for choosing start date-->
-                            <DataGridTemplateColumn Header="Дата начала" Width="*" >
-
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding StartDate}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding StartDate}"/> 
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-
-                            </DataGridTemplateColumn>
-                            <!-- Introduce datepicker for choosing end date-->
-                            <DataGridTemplateColumn Header="Дата Окончания" Width="*">
-
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding FinishDate}"/> 
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding FinishDate}"/> 
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-
-                            </DataGridTemplateColumn>
-                            
-                            <!-- Introduce combobox for choosing kind of military service-->
-                            <DataGridComboBoxColumn x:Name="_militaryTypeComboBox" Header="Вид"
-                                                    SelectedItemBinding="{Binding MilitaryService}"
-                                                    DisplayMemberPath="Title">
-
-
-                            </DataGridComboBoxColumn>
-                        </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Command="{Binding RemoveMilitaryAccountCommand}" Header="Удалить"/>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
-                        
-                    </DataGrid>
-                    <Button Command="{Binding AddMilitaryAccountCommand}">Добавить службу</Button>
-
-                    <Label Content="Стаж" />
-                    <DataGrid Name="experienceDataGrid" 
-                              CanUserAddRows="False" Height="200"
-                              HorizontalAlignment="Stretch" Margin="0, 10"
-                              AutoGenerateColumns="False" 
-                              ItemsSource ="{Binding EmployeeLastWorkPlaces, Mode=TwoWay}"
-                              SelectedItem="{Binding CurrentWorkSpace}">
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Заведение" Binding="{Binding OrganizationTitle}"  Width="*"/>
-                            <DataGridTextColumn Header="Должность" Binding="{Binding Position}" Width="*"/>
-                            <!-- Introduce datepicker for choosing start date-->
-                            <DataGridTemplateColumn Header="Дата зачилсения" Width="*">
-
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding OccupationDate}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate ="{Binding OccupationDate}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-
-                            </DataGridTemplateColumn>
-                            <!-- Introduce datepicker for choosing end date-->
-                            <DataGridTemplateColumn Header="Дата увольнения" Width="*" >
-
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding DismissionDate}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding DismissionDate}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
-
-                            <!-- Introduce combobox for choosing kind of previous experience-->
-                            <DataGridComboBoxColumn x:Name="_experienceTypeComboBox" Header="Вид" 
-                                                    SelectedItemBinding="{Binding Experience}" 
-                                                    DisplayMemberPath="Type" />
-                        </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Command="{Binding RemoveVacationCommand}" Header="Удалить"/>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
-
-                    </DataGrid>
-                    <Button Command="{Binding AddEmployeeWorkPlaceCommand}">Добавить место работы</Button>
-
-                    <Label Content="Отпуск" />
-                    <DataGrid Name="vacationDataGrid" CanUserAddRows="False" Height="200" 
-                              HorizontalAlignment="Stretch" Margin="0, 10"
-                              ItemsSource ="{Binding EmployeeVacations, Mode=TwoWay}"
-                              SelectedItem="{Binding CurrentVacation }"
-                              AutoGenerateColumns="False">
-
-                        <DataGrid.Columns>
-                            <!-- Introduce datepicker for choosing start date-->
-                            <DataGridTemplateColumn Header="Начало отпуска" Width="*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding StartDate}"/> 
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding StartDate}"/> 
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                            </DataGridTemplateColumn>
-
-                            <!-- Introduce datepicker for choosing end date-->
-                            <DataGridTemplateColumn Header="Конец отпуска" Width="*">
-                                
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding FinishDate}"/> 
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                                
-                                <DataGridTemplateColumn.CellEditingTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate ="{Binding FinishDate}"/> 
-                                    </DataTemplate>
-                                
-                                </DataGridTemplateColumn.CellEditingTemplate>
-                                
-                            </DataGridTemplateColumn>
-
-                            <!-- Introduce checkbox for choosing end date-->
-                            <DataGridCheckBoxColumn Header="Оплачиваемый" Binding="{Binding IsPaid}" Width="*"/>
-                            <!-- Introduce combobox for choosing kind of vacation-->
-                            <DataGridComboBoxColumn x:Name="_vacationTypeComboBox" Header="Вид" 
-                                                    SelectedItemBinding="{Binding Vacation}"
-                                                    DisplayMemberPath="Title" /> 
-                        </DataGrid.Columns>
-
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Command="{Binding RemoveVacationCommand}" Header="Удалить"/>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
-                        
-                    </DataGrid>
-                    <Button Command="{Binding AddEmployeeVacationCommand}">Добавить Отпуск</Button>
-
-
-                    <Grid Margin="50, 10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="60"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            
-                        </Grid.ColumnDefinitions>
-
-                        <Button Grid.Column="0" Margin="10, 10" Command="{Binding AcceptCommand}">
-                            Сохранить
-                        </Button>
-                        <Button Grid.Column="1" Margin="10, 10" Command="{Binding DeclineCommand}">
-                            Отменить
-                        </Button>
-
-                    </Grid>
-
+        Title="MainWindow" Height="600" Width="900" >
+
+    <TabControl x:Name="projectPanel">
+        <TabItem x:Name="projectMainInfo">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Проект</TextBlock>
                 </StackPanel>
-            </Border>
+            </TabItem.Header>
+            <TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition  Height="*"/>
 
-        </StackPanel>
-    </ScrollViewer>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Название:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="0" Margin="5,0"/>
+                    <Label Content="Предметная область:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="1" Margin="5,0" />
+                    <Label Content="Дата начала:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="2" Margin="5,0" />
+                    <Label Content="Дата завершения:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="3" Margin="5,0" />
+                    <Label Content="Категория сложности:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="4" Margin="5,0" />
+                    <Label Content="Трудоемкость" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="5" Margin="5,0" />
+                    <Label Content="Себестоимость" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="6" Margin="5,0" />
+                    <Label Content="Экономическая эффективность" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="7" Margin="5,0" />
+                    <Label Content="Конкурентоспособность" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="8" Margin="5,0" />
+                    <Label Content="Описание" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" 
+                       Grid.Column="0" Grid.Row="9" Margin="5,0" />
+
+                    <TextBox Name="titleTextBox" Text="{Binding Project.Title}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="0" Margin="5, 8" />
+                    <TextBox Name="appDomainTextBox" Text="{Binding Project.ApplicationDomain}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="5, 8"/>
+                    <DatePicker Name = "startDatePicker" SelectedDate="{Binding Project.StartingDate}" Grid.Column="1" Grid.Row="2" 
+                                Margin="5, 8"  VerticalContentAlignment="Center"/>
+                    <DatePicker Name = "deadlineDatePicker" SelectedDate="{Binding Project.Deadline}" Grid.Column="1" Grid.Row="3" 
+                                Margin="5, 8"  VerticalContentAlignment="Center"/>
+                    <!--<TextBox Name="complexityTextBox" IsReadOnly="True" Text="{Binding Project.ApplicationDomain}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="4" Margin="5, 8"/>-->
+                    <TextBox Name="labouriousnessTextBox" IsReadOnly="True" Text="{Binding Estimate.Laboriousness}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="5" Margin="5, 8"/>
+                    <TextBox Name="costPriceTextBox" IsReadOnly="True" Text="{Binding Estimate.CostPrice}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="6" Margin="5, 8"/>
+                    <TextBox Name="efficiencyTextBox" IsReadOnly="True" Text="{Binding Estimate.EconomicEfficiency}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="7" Margin="5, 8"/>
+                    <TextBox Name="concurrencyTextBox" IsReadOnly="True" Text="{Binding Estimate.Concurrency}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="8" Margin="5, 8"/>
+                    <TextBox Name="infoTextBox" IsReadOnly="True" Text="{Binding Path}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" TextWrapping="Wrap" Grid.ColumnSpan="3" Grid.Row="9" Margin="5, 8">
+                    </TextBox>
+
+                    <Button Command="{Binding CalculateLaboriousness}" Grid.Row="5" Grid.Column="2" Margin="5, 8">Расчет</Button>
+                    <Button Command="{Binding CalculateCostPrice}" Grid.Row="6" Grid.Column="2" Margin="5, 8">Расчет</Button>
+                    <Button Command="{Binding CalculateEfficiency}" Grid.Row="7" Grid.Column="2" Margin="5, 8">Расчет</Button>
+                    <Button Command="{Binding CalculateConcurrency}" Grid.Row="8" Grid.Column="2" Margin="5, 8">Расчет</Button>
+
+                </Grid>
+            </TabItem.Content>
+        </TabItem>
+        <TabItem x:Name="projectRequirements">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Требования</TextBlock>
+                </StackPanel>
+            </TabItem.Header>
+            <TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Expander.Header>
+                            <Button>Функции</Button>
+                        </Expander.Header>
+                        <DataGrid >
+                            
+                        </DataGrid>
+                    </Expander>
+                </Grid>
+            </TabItem.Content>
+        </TabItem>
+        <TabItem x:Name="projectStaffingTable">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Штатное расписание</TextBlock>
+                </StackPanel>
+            </TabItem.Header>
+            <TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem.Content>
+        </TabItem>
+        <TabItem x:Name="projectExpenses">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Расходы</TextBlock>
+                </StackPanel>
+            </TabItem.Header>
+            <TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem.Content>
+        </TabItem>
+        <TabItem x:Name="projectTech">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Тех.показатели</TextBlock>
+                </StackPanel>
+            </TabItem.Header>
+            <TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem.Content>
+        </TabItem>
+        <TabItem x:Name="projectMarks">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Оценки</TextBlock>
+                </StackPanel>
+            </TabItem.Header>
+            <TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem.Content>
+        </TabItem>
+        <TabItem x:Name="projectParams">
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Параметры</TextBlock>
+                </StackPanel>
+            </TabItem.Header>
+            <TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem.Content>
+        </TabItem>
+    </TabControl>
+    
+
 </Window>

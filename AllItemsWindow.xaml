@@ -9,45 +9,13 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
-                <MenuItem Command="{Binding AddNewEmployee}" Header="Новый проект"/>
+                <MenuItem Command="{Binding AddNewProject}" Header="Новый проект"/>
                 <MenuItem Command="{Binding CloseStateCommand}" Header="Закрыть"/>
             </MenuItem>
             
         </Menu>
         <StackPanel DockPanel.Dock="Bottom">
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <TextBox Name="titleTextBox" Text="{Binding TitleFilter}" VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="0" Margin="5,8" />
-                <TextBox Name="appDomainTextBox" Text="{Binding AppDomainFilter}" VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="0"  Margin="5, 8"/>
-
-                <TextBox Name="infoTextBox" Text="{Binding InfoFilter}" VerticalContentAlignment="Center" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Margin="5, 8"/>
-               
-
-                <Label Content="Назваие" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
-                       Grid.Column="0" Grid.Row="0" Margin="5,8" />
-                <Label Content="Предметная область" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="2" Grid.Row="0"  Margin="5, 8"/>
-
-                <Label Content="Информация"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                       Grid.Column="0" Grid.Row="1" Margin="5, 8"/>
-               
-                <Button Command="{Binding SearchCommand}" Grid.Column="2" Grid.Row="2" Margin="5">Фильровать</Button>
-
-            </Grid>
-            <DataGrid Name="AccountsDataGrid" HorizontalAlignment="Stretch" 
+            <DataGrid Name="ProjectsDataGrid" HorizontalAlignment="Stretch" 
                       Height="350" Margin="20"
                       ItemsSource = "{Binding ProjectsListInfo}" 
                       SelectedItem ="{Binding SelectedItem}"
@@ -56,37 +24,6 @@
                 <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Binding="{Binding Title }" Width="*"/>
                 <DataGridTextColumn Header="ПрО" Binding="{Binding ApplicationDomain }" Width="*"/>
-                <DataGridTextColumn Header="Информация" Binding="{Binding Info }" Width="*"/>
-                    <DataGridTemplateColumn Header="Начало проекта" Width="*">
-
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding StartingDate}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate ="{Binding StartingDate}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Дата сдачи" Width="*">
-
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Deadline}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate ="{Binding Deadline}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-
-                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
