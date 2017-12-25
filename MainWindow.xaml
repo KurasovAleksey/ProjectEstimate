@@ -5,200 +5,410 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectEstimate"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900" >
+        Title="Проект" Height="600" Width="900" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Height="25" VerticalAlignment="Top" Grid.Row="0">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Сохранить" Command="{Binding SaveCommand}" />
+                <MenuItem Header="Закрыть" Command="{Binding CloseCommand}"/>
+            </MenuItem>
+        </Menu>
+        <TabControl x:Name="projectPanel" Grid.Row="1">
+            <TabItem x:Name="projectMainInfo">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Проект</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
 
-    <TabControl x:Name="projectPanel">
-        <TabItem x:Name="projectMainInfo">
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Проект</TextBlock>
-                </StackPanel>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition  Height="*"/>
-
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="120"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Название:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Название:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                        Grid.Column="0" Grid.Row="0" Margin="5,0"/>
-                    <Label Content="Предметная область:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                        <Label Content="Предметная область:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                        Grid.Column="0" Grid.Row="1" Margin="5,0" />
-                    <Label Content="Дата начала:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                        <Label Content="Дата начала:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                        Grid.Column="0" Grid.Row="2" Margin="5,0" />
-                    <Label Content="Дата завершения:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                        <Label Content="Дата завершения:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                        Grid.Column="0" Grid.Row="3" Margin="5,0" />
-                    <Label Content="Категория сложности:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                        <Label Content="Трудоемкость" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                        Grid.Column="0" Grid.Row="4" Margin="5,0" />
-                    <Label Content="Трудоемкость" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                        <Label Content="Себестоимость" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                        Grid.Column="0" Grid.Row="5" Margin="5,0" />
-                    <Label Content="Себестоимость" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                        <Label Content="Экономическая эффективность" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                        Grid.Column="0" Grid.Row="6" Margin="5,0" />
-                    <Label Content="Экономическая эффективность" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                        <Label Content="Конкурентоспособность" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
                        Grid.Column="0" Grid.Row="7" Margin="5,0" />
-                    <Label Content="Конкурентоспособность" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                        <Label Content="Описание" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" 
                        Grid.Column="0" Grid.Row="8" Margin="5,0" />
-                    <Label Content="Описание" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" 
-                       Grid.Column="0" Grid.Row="9" Margin="5,0" />
 
-                    <TextBox Name="titleTextBox" Text="{Binding Project.Title}" 
+                        <TextBox Name="titleTextBox" Text="{Binding Project.Title}" 
                              VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="0" Margin="5, 8" />
-                    <TextBox Name="appDomainTextBox" Text="{Binding Project.ApplicationDomain}" 
+                        <TextBox Name="appDomainTextBox" Text="{Binding Project.ApplicationDomain}" 
                              VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="5, 8"/>
-                    <DatePicker Name = "startDatePicker" SelectedDate="{Binding Project.StartingDate}" Grid.Column="1" Grid.Row="2" 
+                        <DatePicker Name = "startDatePicker" SelectedDate="{Binding Project.StartingDate}" Grid.Column="1" Grid.Row="2" 
                                 Margin="5, 8"  VerticalContentAlignment="Center"/>
-                    <DatePicker Name = "deadlineDatePicker" SelectedDate="{Binding Project.Deadline}" Grid.Column="1" Grid.Row="3" 
+                        <DatePicker Name = "deadlineDatePicker" SelectedDate="{Binding Project.Deadline}" Grid.Column="1" Grid.Row="3" 
                                 Margin="5, 8"  VerticalContentAlignment="Center"/>
-                    <!--<TextBox Name="complexityTextBox" IsReadOnly="True" Text="{Binding Project.ApplicationDomain}" 
-                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="4" Margin="5, 8"/>-->
-                    <TextBox Name="labouriousnessTextBox" IsReadOnly="True" Text="{Binding Estimate.Laboriousness}" 
+                        <TextBox Name="labouriousnessTextBox" IsReadOnly="True" Text="{Binding Estimate.Laboriousness}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="4" Margin="5, 8"/>
+                        <TextBox Name="costPriceTextBox" IsReadOnly="True" Text="{Binding Estimate.CostPrice}" 
                              VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="5" Margin="5, 8"/>
-                    <TextBox Name="costPriceTextBox" IsReadOnly="True" Text="{Binding Estimate.CostPrice}" 
+                        <TextBox Name="efficiencyTextBox" IsReadOnly="True" Text="{Binding Estimate.EconomicEfficiency}" 
                              VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="6" Margin="5, 8"/>
-                    <TextBox Name="efficiencyTextBox" IsReadOnly="True" Text="{Binding Estimate.EconomicEfficiency}" 
+                        <TextBox Name="concurrencyTextBox" IsReadOnly="True" Text="{Binding Estimate.Concurrency}" 
                              VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="7" Margin="5, 8"/>
-                    <TextBox Name="concurrencyTextBox" IsReadOnly="True" Text="{Binding Estimate.Concurrency}" 
-                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="8" Margin="5, 8"/>
-                    <TextBox Name="infoTextBox" IsReadOnly="True" Text="{Binding Path}" 
-                             VerticalContentAlignment="Center" Grid.Column="1" TextWrapping="Wrap" Grid.ColumnSpan="3" Grid.Row="9" Margin="5, 8">
-                    </TextBox>
+                        <TextBox Name="infoTextBox" Text="{Binding Path}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" TextWrapping="Wrap" Grid.ColumnSpan="3" Grid.Row="8" Margin="5, 8">
+                        </TextBox>
 
-                    <Button Command="{Binding CalculateLaboriousness}" Grid.Row="5" Grid.Column="2" Margin="5, 8">Расчет</Button>
-                    <Button Command="{Binding CalculateCostPrice}" Grid.Row="6" Grid.Column="2" Margin="5, 8">Расчет</Button>
-                    <Button Command="{Binding CalculateEfficiency}" Grid.Row="7" Grid.Column="2" Margin="5, 8">Расчет</Button>
-                    <Button Command="{Binding CalculateConcurrency}" Grid.Row="8" Grid.Column="2" Margin="5, 8">Расчет</Button>
+                        <Button Command="{Binding CalculateLaboriousness}" Grid.Row="4" Grid.Column="2" Margin="5, 8">Расчет</Button>
+                        <Button Command="{Binding CalculateCostPrice}" Grid.Row="5" Grid.Column="2" Margin="5, 8">Расчет</Button>
+                        <Button Command="{Binding CalculateEfficiency}" Grid.Row="6" Grid.Column="2" Margin="5, 8">Расчет</Button>
+                        <Button Command="{Binding CalculateConcurrency}" Grid.Row="7" Grid.Column="2" Margin="5, 8">Расчет</Button>
 
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-        <TabItem x:Name="projectRequirements">
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Требования</TextBlock>
-                </StackPanel>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Expander Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                        <Expander.Header>
-                            <Button>Функции</Button>
-                        </Expander.Header>
-                        <DataGrid >
-                            
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="projectRequirements">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Требования</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Категория сложности:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="0" Margin="5,0" />
+                        <Label Content="Объем кода:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="2" Grid.Row="0" Margin="5,0" />
+                        <TextBox Name="complexityTextBox" IsReadOnly="True" Text="{Binding Project.Category}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="0" Margin="5, 8"/>
+                        <TextBox Name="locTextBox" IsReadOnly="True" Text="{Binding Project.LOC}" 
+                             VerticalContentAlignment="Center" Grid.Column="3" Grid.Row="0" Margin="5, 8"/>
+                        <StackPanel Name="expandersStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5">
+                            <Expander Name ="functionExpander" Expanded="functionExpander_Expanded">
+                                <Expander.Header>
+                                    Функции
+                                </Expander.Header>
+                                <StackPanel Name="funcExpanderStkPanel" Margin="40,0"/>
+                            </Expander>
+                            <Expander Name ="featureExpander" Expanded="functionExpander_Expanded">
+                                <Expander.Header>
+                                    Характеристики
+                                </Expander.Header>
+                                <StackPanel Name="featExpanderStkPanel" Margin="40,0"/>
+                            </Expander>
+                            <Expander Name ="extraFeatureExpander" Expanded="functionExpander_Expanded">
+                                <Expander.Header>
+                                    Дополнительные характеристики
+                                </Expander.Header>
+                                <StackPanel Name="extraFeatExpanderStkPanel" Margin="40,0"/>
+                            </Expander>
+
+                        </StackPanel>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="projectStaffingTable">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Штатное расписание</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Рекомендуемое количество участников:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="0" Margin="5,0" />
+                        <TextBox Name="employeeQuantityTextBox" Text="{Binding EmployeeQuantity}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="0" Margin="5, 8" />
+                        <Button Content="Рассчитать" Command="{Binding CalculateOptimalEmployeeQuantity}"  Grid.Row="0" Grid.Column="2" Margin="5,8"/>
+                        <DataGrid Name="positionsDataGrid" CanUserAddRows="False" 
+                              ItemsSource="{Binding Positions, Mode=TwoWay}"
+                              SelectedItem="{Binding CurrentPosition}"
+                              Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5"
+                              HorizontalAlignment="Stretch" 
+                              AutoGenerateColumns="False">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Title}" Header="Должность" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Salary}" Header="Оклад" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Quantity}" Header="Количество мест" Width="*"/>
+
+                            </DataGrid.Columns>
+
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding AddPositionCommand}" Header="Добавить"/>
+                                    <MenuItem Command="{Binding RemovePositionCommand}" Header="Удалить"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+
                         </DataGrid>
-                    </Expander>
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-        <TabItem x:Name="projectStaffingTable">
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Штатное расписание</TextBlock>
-                </StackPanel>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="projectExpenses">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Расходы</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="280"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Сумма с учетом торгово-накладных расходов:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="0" Margin="5,0" />
+                        <TextBox Name="expensivesTextBox" Text="{Binding ExpensivesSum}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="0" Margin="5, 8" />
+                        <Button Content="Рассчитать" Command="{Binding CalculateExpensivesSum}" Grid.Row="0" Grid.Column="2" Margin="5,8"/>
+                        <Label Content="Оборудование:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="1" Margin="5,0"/>
+                        <Label Content="Материалы:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="3" Margin="5,0"/>
+                        <DataGrid Name="equipmentDataGrid" CanUserAddRows="False" 
+                              ItemsSource="{Binding Path=EquipmentList, Mode=TwoWay}"
+                              SelectedItem="{Binding Path=CurrentEquipment}"
+                              Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
+                              HorizontalAlignment="Stretch" 
+                              AutoGenerateColumns="False">
 
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Path=Title}" Header="Наименование оборудования" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Path=Cost}" Header="Стоимость единицы" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Path=Quantity}" Header="Приобретаемое количество" Width="*"/>
 
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-        <TabItem x:Name="projectExpenses">
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Расходы</TextBlock>
-                </StackPanel>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
+                            </DataGrid.Columns>
 
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding AddEquipmentCommand}" Header="Добавить"/>
+                                    <MenuItem Command="{Binding RemoveEquipmentCommand}" Header="Удалить"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
 
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-        <TabItem x:Name="projectTech">
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Тех.показатели</TextBlock>
-                </StackPanel>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
+                        </DataGrid>
 
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
+                        <DataGrid Name="materialsDataGrid" CanUserAddRows="False" 
+                              ItemsSource="{Binding Path=Materials, Mode=TwoWay}"
+                              SelectedItem="{Binding Path=CurrentMaterial}"
+                              Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"
+                              HorizontalAlignment="Stretch" 
+                              AutoGenerateColumns="False">
 
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-        <TabItem x:Name="projectMarks">
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Оценки</TextBlock>
-                </StackPanel>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Path=Title}" Header="Наименование материала" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Path=Unit}" Header="Единица измерения" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Path=Cost}" Header="Стоимость единицы" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Path=Quantity}" Header="Приобретаемое количество" Width="*"/>
 
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
 
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-        <TabItem x:Name="projectParams">
-            <TabItem.Header>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock>Параметры</TextBlock>
-                </StackPanel>
-            </TabItem.Header>
-            <TabItem.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
+                            </DataGrid.Columns>
 
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding AddMaterialCommand}" Header="Добавить"/>
+                                    <MenuItem Command="{Binding RemoveMaterialCommand}" Header="Удалить"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
 
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </TabItem.Content>
-        </TabItem>
-    </TabControl>
+                        </DataGrid>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="projectTech">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Тех.показатели</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid Name="technicalParametersDataGrid" CanUserAddRows="False" 
+                              ItemsSource="{Binding TechnicalParameters, Mode=TwoWay}"
+                              SelectedItem="{Binding CurrentTechnicalParameter}"
+                              Grid.Row="0" Grid.Column="0"
+                              HorizontalAlignment="Stretch" 
+                              AutoGenerateColumns="False">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Title}" Header="Наименование параметра" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Weight}" Header="Важность" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Value}" Header="Значение" Width="*"/>
+
+
+                            </DataGrid.Columns>
+
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding AddTechnicalParameterCommand}" Header="Добавить"/>
+                                    <MenuItem Command="{Binding RemoveTechnicalParameterCommand}" Header="Удалить"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+
+                        </DataGrid>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="projectMarks">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Оценки</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid Name="marksDataGrid" CanUserAddRows="False" 
+                              ItemsSource="{Binding Marks, Mode=TwoWay}"
+                              SelectedItem="{Binding CurrentMark}"
+                              Grid.Row="0" Grid.Column="0"
+                              HorizontalAlignment="Stretch" 
+                              AutoGenerateColumns="False">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Title}" Header="Наименование параметра" Width="*"/>
+                                <DataGridTextColumn Binding="{Binding Value}" Header="Значение" Width="*"/>
+
+
+                            </DataGrid.Columns>
+
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Command="{Binding AddMarkCommand}" Header="Добавить"/>
+                                    <MenuItem Command="{Binding RemoveMarkCommand}" Header="Удалить"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+
+                        </DataGrid>
+                    </Grid>
+
+                </TabItem.Content>
+            </TabItem>
+            <TabItem x:Name="projectParams">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Параметры</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Торгово-заготовительные расходы:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="0" Margin="5,0" />
+                        <Label Content="Норматив дополнительной зарплаты:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="1" Margin="5,0" />
+                        <Label Content="Норматив отчислений на социальные нужды:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="2" Margin="5,0" />
+                        <Label Content="Норматив накладных расходов:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="3" Margin="5,0" />
+                        <Label Content="Норматив рентабельности:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="4" Margin="5,0" />
+                        <Label Content="Норматив транспортных расходов:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="5" Margin="5,0" />
+                        <Label Content="Норматив наценки торговых организаций:" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Column="0" Grid.Row="6" Margin="5,0" />
+                        <TextBox Name="tradeProcurementExpensesTextBox" IsReadOnly="True" Text="{Binding Coefficients.TradeProcurementExpenses}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="0" Margin="5, 8"/>
+                        <TextBox Name="extraSalaryTextBox" IsReadOnly="True" Text="{Binding Coefficients.ExtraSalary}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="5, 8"/>
+                        <TextBox Name="socialNeedsTextBox" IsReadOnly="True" Text="{Binding Coefficients.SocialNeeds}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="5, 8"/>
+                        <TextBox Name="overheadsTextBox" IsReadOnly="True" Text="{Binding Coefficients.Overheads}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" Grid.Row="3" Margin="5, 8"/>
+                        <TextBox Name="rentabilityTextBox" Text="{Binding Coefficients.Rentability}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" TextWrapping="Wrap" Grid.Row="4" Margin="5, 8"></TextBox>
+                        <TextBox Name="transportExpensesTextBox" Text="{Binding Coefficients.TransportExpenses}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" TextWrapping="Wrap" Grid.Row="5" Margin="5, 8"></TextBox>
+                        <TextBox Name="tradeOrgsMarkUpTextBox" Text="{Binding Coefficients.TradeOrgsMarkUp}" 
+                             VerticalContentAlignment="Center" Grid.Column="1" TextWrapping="Wrap" Grid.Row="6" Margin="5, 8"></TextBox>
+
+                    </Grid>
+
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+    </Grid>
     
+
 
 </Window>

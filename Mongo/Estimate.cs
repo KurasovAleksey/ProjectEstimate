@@ -10,7 +10,7 @@ namespace ProjectEstimate.Mongo
     {
         public double Laboriousness { get; set; }
 
-        public decimal CostPrice { get; set; }
+        public double CostPrice { get; set; }
 
         public double EconomicEfficiency { get; set; }
 

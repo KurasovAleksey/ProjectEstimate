@@ -17,9 +17,12 @@ namespace ProjectEstimate.Mongo
 
         public int LOC { get; set; }
 
-        public bool Equals(Function other)
+        public int CategoryId { get; set; }
+
+        public override bool Equals(object other)
         {
-            if (this.Id == other.Id)
+            Function function = other as Function;
+            if (this.Id == function.Id)
             {
                 return true;
             }
@@ -27,6 +30,11 @@ namespace ProjectEstimate.Mongo
             {
                 return false;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

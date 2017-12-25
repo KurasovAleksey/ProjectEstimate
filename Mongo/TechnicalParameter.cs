@@ -13,5 +13,21 @@ namespace ProjectEstimate.Mongo
         public double Weight { get; set; }
 
         public double Value { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var parameter = obj as TechnicalParameter;
+            return parameter != null &&
+                   Title == parameter.Title &&
+                   Weight == parameter.Weight;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1290770966;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
+            hashCode = hashCode * -1521134295 + Weight.GetHashCode();
+            return hashCode;
+        }
     }
 }

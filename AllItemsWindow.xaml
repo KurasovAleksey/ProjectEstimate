@@ -27,7 +27,8 @@
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Command="{Binding EditSelectedItemCommand}" Header="Редактировать"/>
+                        <MenuItem Command="{Binding AddNewProject}" Header="Создать"/>
+                        <MenuItem Command="{Binding EditSelectedItemCommand}" Header="Подробнее"/>
                         <MenuItem Command="{Binding RemoveSelectedItemCommand}" Header="Удалить"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>

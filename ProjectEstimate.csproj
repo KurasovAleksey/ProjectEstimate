@@ -72,6 +72,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CompetitivenessWindow.xaml.cs">
+      <DependentUpon>CompetitivenessWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Coefficients.cs" />
     <Compile Include="Mongo\ExtraFeature.cs" />
     <Compile Include="Mongo\Feature.cs" />
     <Compile Include="Mongo\Function.cs" />
@@ -79,14 +83,20 @@
     <Compile Include="Mongo\Project.cs" />
     <Compile Include="Mongo\ProjectRepository.cs" />
     <Compile Include="Mongo\TechnicalParameter.cs" />
+    <Compile Include="Utils\Calculator.cs" />
     <Compile Include="Utils\CommandImpl.cs" />
     <Compile Include="Utils\ProjectOption.cs" />
+    <Compile Include="ViewModels\CompetitorsViewModel.cs" />
     <Compile Include="ViewModels\ProjectInfoDto.cs" />
     <Compile Include="ViewModels\ProjectInfoViewModel.cs" />
     <Compile Include="ViewModels\ProjectListInfoViewModel.cs" />
     <Page Include="AllItemsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CompetitivenessWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

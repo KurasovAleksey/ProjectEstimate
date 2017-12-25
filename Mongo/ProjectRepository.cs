@@ -7,7 +7,7 @@ using MongoDB.Bson;
 using System.IO;
 using ProjectEstimate.Mongo;
 
-namespace _3DForgeApi.DAL.Model
+namespace ProjectEstimate.Mongo
 {
     public class ProjectRepository
     {
@@ -33,9 +33,12 @@ namespace _3DForgeApi.DAL.Model
                 .FirstOrDefault();
         }
 
-        public ReplaceOneResult UpsertProject(Project project)
+        public void UpsertProject(Project project)
         {
-            return _context.Projects.ReplaceOne(new BsonDocument("Id", project.Id),
+            if (project.Id == null)
+                 _context.Projects.InsertOne(project, null);
+            else
+             _context.Projects.ReplaceOne(new BsonDocument("Title", project.Title),
                  project, new UpdateOptions() { IsUpsert = true });
         }
 

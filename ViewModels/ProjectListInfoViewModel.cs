@@ -9,16 +9,25 @@ using System.Runtime.CompilerServices;
 using ProjectEstimate.Utils;
 using ProjectEstimate;
 using ProjectEstimate.Mongo;
-using _3DForgeApi.DAL.Model;
 
 namespace ProjectEstimate.ViewModels
 {
     public class ProjectListInfoViewModel : INotifyPropertyChanged
     { 
 
-        public ProjectListInfoViewModel()
+        public ProjectListInfoViewModel(DbContext context)
         {
-            projectListInfo = new ObservableCollection<ProjectInfoDto>();
+            Context = context;
+            InitList();
+        }
+
+        public void InitList()
+        {
+            ProjectRepository pr = new ProjectRepository(Context);
+            var list = (from p in pr.GetAllProjects()
+                       select new ProjectInfoDto()
+                       { Id = p.Id, Title = p.Title, ApplicationDomain = p.ApplicationDomain }).ToList();
+            ProjectsListInfo = new ObservableCollection<ProjectInfoDto>(list);
         }
 
         public DbContext Context { get; set; }
@@ -29,13 +38,13 @@ namespace ProjectEstimate.ViewModels
 
         public string InfoFilter { get; set; }
 
-        ObservableCollection<ProjectInfoDto> projectListInfo;
-        public ObservableCollection<ProjectInfoDto> ProjectListInfo
+        ObservableCollection<ProjectInfoDto> projectsListInfo;
+        public ObservableCollection<ProjectInfoDto> ProjectsListInfo
         {
-            get => projectListInfo;
+            get => projectsListInfo;
             set
             {
-                projectListInfo = value;
+                projectsListInfo = value;
                 OnPropertyChanged("ProjectListInfo");
             }
         }
@@ -65,7 +74,8 @@ namespace ProjectEstimate.ViewModels
         {
             get => addNewProject ?? (addNewProject = new CommandImpl(obj =>
             {
-                var window = new MainWindow();
+                var window = new MainWindow(null);
+                window.Closed += Window_Closed;
                 window.Show();
             }));
         }
@@ -81,10 +91,16 @@ namespace ProjectEstimate.ViewModels
                   {
                       if (SelectedItem != null)
                       {
-                          var window = new MainWindow() { ProjectId = SelectedItem.Id };
+                          var window = new MainWindow(SelectedItem.Id);
+                          window.Closed += Window_Closed;
                           window.Show();
                       }
                   }));
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            InitList();
         }
 
         private CommandImpl removeSelectedItemCommand;
@@ -98,7 +114,7 @@ namespace ProjectEstimate.ViewModels
                             {
                                 var repo = new ProjectRepository(Context);
                                 repo.RemoveProject(SelectedItem.Id);
-                                ProjectListInfo.Remove(SelectedItem);
+                                ProjectsListInfo.Remove(SelectedItem);
                             }
                         }
                     ));

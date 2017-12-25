@@ -17,9 +17,10 @@ namespace ProjectEstimate.Mongo
 
         public int Category { get; set; }
 
-        public bool Equals(Feature other)
+        public override bool Equals(object other)
         {
-            if (this.Id == other.Id)
+            Feature feature = other as Feature;
+            if (this.Id == feature.Id)
             {
                 return true;
             }
@@ -27,6 +28,11 @@ namespace ProjectEstimate.Mongo
             {
                 return false;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

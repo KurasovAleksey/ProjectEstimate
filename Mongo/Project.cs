@@ -20,7 +20,6 @@ namespace ProjectEstimate.Mongo
             Features = new HashSet<Feature>();
             TechnicalParameters = new HashSet<TechnicalParameter>();
             Marks = new HashSet<Mark>();
-            Estimate = new Estimate();
         }
 
         [BsonRepresentation(BsonType.ObjectId)]
@@ -54,12 +53,9 @@ namespace ProjectEstimate.Mongo
 
         public ICollection<ExtraFeature> ExtraFeatures { get; set; }
 
-        public double DevelopmentSquare { get; set; }
-
         public ICollection<TechnicalParameter> TechnicalParameters { get; set; }
 
         public ICollection<Mark> Marks { get; set; }
 
-        public Estimate Estimate { get; set; }
     }
 }

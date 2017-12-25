@@ -10,11 +10,22 @@ namespace ProjectEstimate.Mongo
     {
         public string Title { get; set; }
 
-        public decimal Cost { get; set; }
+        public double Cost { get; set; }
 
         public int Quantity { get; set; }
 
         public double PowerConsumption { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            var equipment = obj as Equipment;
+            return equipment != null &&
+                   Title == equipment.Title;
+        }
+
+        public override int GetHashCode()
+        {
+            return 434131217 + EqualityComparer<string>.Default.GetHashCode(Title);
+        }
     }
 }

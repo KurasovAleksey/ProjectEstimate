@@ -17,17 +17,24 @@ using System.Windows.Shapes;
 namespace ProjectEstimate
 {
     /// <summary>
-    /// Логика взаимодействия для Window1.xaml
+    /// Логика взаимодействия для CompetitivenessWindow.xaml
     /// </summary>
-    public partial class AllItemsWindow : Window
+    public partial class CompetitivenessWindow : Window
     {
-        DbContext context = new DbContext();
-
-        public AllItemsWindow() 
+        public CompetitivenessWindow(DbContext context)
         {
             InitializeComponent();
-            var viewModel = new ProjectListInfoViewModel(context);
-            DataContext = viewModel;
+            DataContext = new CompetitorsViewModel(context) { Parent = this };
+        }
+
+        public Project Standart { get; set; }
+
+        public Project Base { get; set; }
+
+        public void SwapPanels()
+        {
+            stkPanelStandart.Visibility = Visibility.Hidden;
+            stkPanelBase.Visibility = Visibility.Visible;
         }
 
     }

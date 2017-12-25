@@ -11,8 +11,8 @@ using System.Windows.Markup;
 using System.Windows;
 using System.Windows.Controls;
 using ProjectEstimate.Mongo;
-using _3DForgeApi.DAL.Model;
 using ProjectEstimate.Utils;
+using System.IO;
 
 namespace ProjectEstimate.ViewModels
 {
@@ -22,8 +22,31 @@ namespace ProjectEstimate.ViewModels
 
         public DbContext Context { get; set; }
 
-        public ProjectInfoViewModel(string projectId)
+        public MainWindow Parent { get; set; }
+
+        Dictionary<int, string> functionCategoryDictionary;
+        Dictionary<int, string> featureCategoryDictionary;
+
+        public ProjectInfoViewModel(string projectId, MainWindow parent, params Expander[] expanders)
         {
+            Parent = parent;
+            
+            Context = new DbContext();
+            functionCategoryDictionary = new Dictionary<int, string>();
+            functionCategoryDictionary.Add(1, "Ввод, анализ входной информации, генерация кодов и процессор входного языка");
+            functionCategoryDictionary.Add(2, "Формирование, введение и обслуживание баз данных (БД)");
+            functionCategoryDictionary.Add(3, "Формирование и обработка файлов");
+            functionCategoryDictionary.Add(4, "Генерация программ и ПО, а также настройка ПО");
+            functionCategoryDictionary.Add(5, "Управление ПО, компонентами ПО и внешними устройствами");
+            functionCategoryDictionary.Add(6, "Тестирование, проведение тестовых испытаний прикладных программ, вспомогательные функции");
+            functionCategoryDictionary.Add(7, "Расчетные задачи, формирование и вывод на внешние носители документов сложной формы и файлов");
+            functionCategoryDictionary.Add(8, "Создание Internet-портала");
+
+            featureCategoryDictionary = new Dictionary<int, string>();
+            featureCategoryDictionary.Add(1, "Категория 1");
+            featureCategoryDictionary.Add(2, "Категория 2");
+            featureCategoryDictionary.Add(3, "Категория 3");
+
             Project project;
             if (projectId == null)
             {
@@ -36,11 +59,15 @@ namespace ProjectEstimate.ViewModels
                 var projectRepository = new ProjectRepository(Context);
                 project = projectRepository.GetProject(projectId);
             }
-            InitWindowContent(project);
+            InitWindowContent(project, expanders);
         }
 
-        public void InitWindowContent(Project project)
+        public void InitWindowContent(Project project, params Expander[] expanders)
         {
+            var functionsExpander = expanders[0];
+            var featuresExpander = expanders[1];
+            var extraFeaturesExpander = expanders[2];
+
             this.Project = project;
             this.EquipmentList
                 = new ObservableCollection<Equipment>(project.EquipmentList);
@@ -48,19 +75,75 @@ namespace ProjectEstimate.ViewModels
                 = new ObservableCollection<Material>(project.Materials);
             this.Positions
                 = new ObservableCollection<Position>(project.Positions);
-            this.ExtraFeatures 
-                = new ObservableCollection<ExtraFeature>(project.ExtraFeatures);
-            this.Features 
-                = new ObservableCollection<Feature>(project.Features);
-            this.Functions 
-                = new ObservableCollection<Function>(project.Functions);
+            
             this.Marks 
                 = new ObservableCollection<Mark>(project.Marks);
             this.TechnicalParameters 
                 = new ObservableCollection<TechnicalParameter>(project.TechnicalParameters);
-            Estimate = project.Estimate ?? new Estimate();
+            Estimate = new Estimate();
+
+            ProjectRepository pr = new ProjectRepository(Context);
+            Thickness checkBoxMargin = new Thickness(20, 0, 0, 0);
+
+            var functionsList = pr.GetAllFunctions().GroupBy(f => f.CategoryId).OrderBy(g => g.Key);
+            StackPanel functionsStackPanel = functionsExpander.Content as StackPanel;
+            foreach(var group in functionsList)
+            {
+                Expander expander = new Expander();
+                expander.Header = functionCategoryDictionary[group.Key];
+                expander.Expanded += Parent.functionExpander_Expanded;
+                StackPanel stkPanel = new StackPanel();
+                foreach (var f in group)
+                {
+                    FunctionChecker funcChecker = new FunctionChecker(this, f, Project.Functions.Contains(f));
+                    CheckBox chBox = new CheckBox() { DataContext = funcChecker, Margin=checkBoxMargin };
+                    chBox.SetBinding(CheckBox.IsCheckedProperty, "IsChecked");
+                    chBox.SetBinding(CheckBox.ContentProperty, "Item.Title");
+                    stkPanel.Children.Add(chBox);
+                }
+                expander.Content = stkPanel;
+
+                functionsStackPanel.Children.Add(expander);
+               
 
 
+            }
+            functionsExpander.Content = functionsStackPanel;
+
+            var featuresList = pr.GetAllFeatures().GroupBy(f => f.Category).OrderBy(g => g.Key);
+            StackPanel featuresStackPanel = featuresExpander.Content as StackPanel;
+            foreach (var group in featuresList)
+            {
+                Expander expander = new Expander();
+                expander.Header = featureCategoryDictionary[group.Key];
+                expander.Expanded += Parent.functionExpander_Expanded;
+                StackPanel stkPanel = new StackPanel();
+                foreach (var f in group)
+                {
+                    FeatureChecker featChecker = new FeatureChecker(this, f, Project.Features.Contains(f));
+                    CheckBox chBox = new CheckBox() { DataContext = featChecker, Margin = checkBoxMargin };
+                    chBox.SetBinding(CheckBox.IsCheckedProperty, "IsChecked");
+                    chBox.SetBinding(CheckBox.ContentProperty, "Item.Title");
+                    stkPanel.Children.Add(chBox);
+                }
+                expander.Content = stkPanel;
+
+                featuresStackPanel.Children.Add(expander);
+
+            }
+            featuresExpander.Content = featuresStackPanel;
+
+            var extraFeaturesList = pr.GetAllExtraFeatures().OrderBy(ef => ef.Id);
+            StackPanel extraFeaturesStackPanel = extraFeaturesExpander.Content as StackPanel;
+            foreach (var f in extraFeaturesList)
+            {
+                ExtraFeatureChecker extraFeatChecker = new ExtraFeatureChecker(this, f, Project.ExtraFeatures.Contains(f));
+                CheckBox chBox = new CheckBox() { DataContext = extraFeatChecker, Margin = checkBoxMargin };
+                chBox.SetBinding(CheckBox.IsCheckedProperty, "IsChecked");
+                chBox.SetBinding(CheckBox.ContentProperty, "Item.Title");
+                extraFeaturesStackPanel.Children.Add(chBox);
+            }
+            extraFeaturesExpander.Content = extraFeaturesStackPanel;
         }
 
         private Project project;
@@ -90,6 +173,39 @@ namespace ProjectEstimate.ViewModels
                 estimate = value;
                 NotifyPropertyChanged("Estimate");
             }
+        }
+
+        private int employeeQuantity;
+        public int EmployeeQuantity
+        {
+            get
+            {
+                return employeeQuantity;
+            }
+            set
+            {
+                employeeQuantity = value;
+                NotifyPropertyChanged("EmployeeQuantity");
+            }
+        }
+
+        private double expensivesSum;
+        public double ExpensivesSum
+        {
+            get
+            {
+                return expensivesSum;
+            }
+            set
+            {
+                expensivesSum = value;
+                NotifyPropertyChanged("ExpensivesSum");
+            }
+        }
+
+        public Coefficients Coefficients
+        {
+            get => Coefficients.Instance;
         }
 
         #region Datagrids
@@ -196,14 +312,13 @@ namespace ProjectEstimate.ViewModels
             }
         }
 
-
         #endregion DataGrid current values
 
         #region Equipment
         public ObservableCollection<Equipment> EquipmentList
         {
-            get => project.EquipmentList as ObservableCollection<Equipment>;
-            set { project.EquipmentList = value; NotifyPropertyChanged("EquipmentList"); }
+            get => Project.EquipmentList as ObservableCollection<Equipment>;
+            set { Project.EquipmentList = value; NotifyPropertyChanged("EquipmentList"); }
         }
 
         private CommandImpl addEquipmentCommand;
@@ -239,8 +354,8 @@ namespace ProjectEstimate.ViewModels
         #region Material
         public ObservableCollection<Material> Materials
         {
-            get => project.Materials as ObservableCollection<Material>;
-            set { project.Materials = value; NotifyPropertyChanged("Materials"); }
+            get => Project.Materials as ObservableCollection<Material>;
+            set { Project.Materials = value; NotifyPropertyChanged("Materials"); }
         }
 
         private CommandImpl addMaterialCommand;
@@ -289,13 +404,13 @@ namespace ProjectEstimate.ViewModels
                         {
                             var position = new Position();
                             Positions.Add(position);
-                            NotifyPropertyChanged("Position");
+                            NotifyPropertyChanged("Positions");
                         }
                     ));
         }
 
         private CommandImpl removePositionCommand;
-        public CommandImpl RemoveMilitaryAccountCommand
+        public CommandImpl RemovePositionCommand
         {
             get => removePositionCommand ??
                   (removePositionCommand = new CommandImpl(
@@ -312,38 +427,42 @@ namespace ProjectEstimate.ViewModels
         }
         #endregion MiltaryAccount
 
-        #region Function
-        public ObservableCollection<Function> Functions
-        {
-            get => Project.Functions as ObservableCollection<Function>;
-            set { Project.Functions = value; NotifyPropertyChanged("Functions"); }
-        }
-
-        #endregion
-
-        #region Feature
-        public ObservableCollection<Feature> Features
-        {
-            get => Project.Features as ObservableCollection<Feature>;
-            set { Project.Features = value; NotifyPropertyChanged("Features"); }
-        }
-
-        #endregion
-
-        #region ExtraFeature
-        public ObservableCollection<ExtraFeature> ExtraFeatures
-        {
-            get => Project.ExtraFeatures as ObservableCollection<ExtraFeature>;
-            set { Project.ExtraFeatures = value; NotifyPropertyChanged("ExtraFeatures"); }
-        }
-
-        #endregion
-
         #region TechnicalParameter
         public ObservableCollection<TechnicalParameter> TechnicalParameters
         {
             get => Project.TechnicalParameters as ObservableCollection<TechnicalParameter>;
             set { Project.TechnicalParameters = value; NotifyPropertyChanged("TechnicalParameters"); }
+        }
+
+        private CommandImpl addTechnicalParameterCommand;
+        public CommandImpl AddTechnicalParameterCommand
+        {
+            get => addTechnicalParameterCommand ??
+                  (addTechnicalParameterCommand = new CommandImpl(
+                        obj =>
+                        {
+                            var technicalParameter = new TechnicalParameter();
+                            TechnicalParameters.Add(technicalParameter);
+                            NotifyPropertyChanged("TechnicalParameters");
+                        }
+                    ));
+        }
+
+        private CommandImpl removeTechnicalParameterCommand;
+        public CommandImpl RemoveTechnicalParameterCommand
+        {
+            get => removeTechnicalParameterCommand ??
+                  (removeTechnicalParameterCommand = new CommandImpl(
+                        obj =>
+                        {
+                            if (CurrentTechnicalParameter != null)
+                            {
+                                Project.TechnicalParameters.Remove(CurrentTechnicalParameter);
+                                TechnicalParameters.Remove(CurrentTechnicalParameter);
+                                NotifyPropertyChanged("TechnicalParameters");
+                            }
+                        }
+                    ));
         }
 
         #endregion
@@ -355,51 +474,137 @@ namespace ProjectEstimate.ViewModels
             set { Project.Marks = value; NotifyPropertyChanged("Marks"); }
         }
 
+        private CommandImpl addMarkCommand;
+        public CommandImpl AddMarkCommand
+        {
+            get => addMarkCommand ??
+                  (addMarkCommand = new CommandImpl(
+                        obj =>
+                        {
+                            var mark = new Mark();
+                            Marks.Add(mark);
+                            NotifyPropertyChanged("Marks");
+                        }
+                    ));
+        }
+
+        private CommandImpl removeMarkCommand;
+        public CommandImpl RemoveMarkCommand
+        {
+            get => removeMarkCommand ??
+                  (removeMarkCommand = new CommandImpl(
+                        obj =>
+                        {
+                            if (CurrentMark != null)
+                            {
+                                Project.Marks.Remove(CurrentMark);
+                                Marks.Remove(CurrentMark);
+                                NotifyPropertyChanged("Marks");
+                            }
+                        }
+                    ));
+        }
+
         #endregion
 
         #endregion Datagrids
 
         #region Buttons Commands
-        private CommandImpl declineCommand;
-        public CommandImpl DeclineCommand
+
+        private CommandImpl calculateOptimalEmployeeQuantity;
+        public CommandImpl CalculateOptimalEmployeeQuantity
         {
-            get => declineCommand ?? (declineCommand = new CommandImpl(obj =>
+            get => calculateOptimalEmployeeQuantity ?? (calculateOptimalEmployeeQuantity = new CommandImpl(obj =>
             {
-                if (isNewProject)
+                EmployeeQuantity = Calculator.CalculateExecutorsQuantity(Project);
+            }));
+        }
+
+        private CommandImpl calculateExpensivesSum;
+        public CommandImpl CalculateExpensivesSum
+        {
+            get => calculateExpensivesSum ?? (calculateExpensivesSum = new CommandImpl(obj =>
+            {
+                ExpensivesSum = Calculator.GetExpenseOverall(Project);
+            }));
+        }
+
+        private CommandImpl saveCommand;
+        public CommandImpl SaveCommand
+        {
+            get => saveCommand ?? (saveCommand = new CommandImpl(obj =>
+            {
+                try
                 {
-                    InitWindowContent(new Project());
-                }
-                else
-                {
-                    string id = Project.Id;
                     var repo = new ProjectRepository(Context);
-                    var project = repo.GetProject(id);
-                    InitWindowContent(project);
-                    NotifyPropertyChanged("Project");
+                    if (isNewProject)
+                    {
+                        repo.UpsertProject(Project);
+                        isNewProject = false;
+                    }
+                    else
+                    {
+                        repo.UpsertProject(Project);
+                    }
+                } catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
                 }
             }));
         }
 
-        private CommandImpl acceptCommand;
-        public CommandImpl AcceptCommand
+        private CommandImpl closeCommand;
+        public CommandImpl CloseCommand
         {
-            get => acceptCommand ?? (acceptCommand = new CommandImpl(obj =>
+            get => closeCommand ?? (closeCommand = new CommandImpl(obj =>
             {
-                var repo = new ProjectRepository(Context);
-                if (isNewProject)
-                {
-                    string id = repo.UpsertProject(Project).UpsertedId.AsString;
-                    isNewProject = false;
-                    Project.Id = id;
-                }
-                else
-                {
-                    repo.UpsertProject(Project);
-
-                }
+                Parent.Close();
             }));
         }
-       
+
+        private CommandImpl calculateLaboriousness;
+        public CommandImpl CalculateLaboriousness
+        {
+            get => calculateLaboriousness ?? (calculateLaboriousness = new CommandImpl(obj =>
+            {
+                Estimate.Laboriousness = Calculator.CalculateLaboriousness(Project);
+                NotifyPropertyChanged("Estimate");
+            }));
+        }
+
+        private CommandImpl calculateCostPrice;
+        public CommandImpl CalculateCostPrice
+        {
+            get => calculateCostPrice ?? (calculateCostPrice = new CommandImpl(obj =>
+            {
+                Estimate.CostPrice = Calculator.CalculateCostPrice(Project);
+                NotifyPropertyChanged("Estimate");
+            }));
+        }
+
+        private CommandImpl calculateEfficiency;
+        public CommandImpl CalculateEfficiency
+        {
+            get => calculateEfficiency ?? (calculateEfficiency = new CommandImpl(obj =>
+            {
+                Estimate.EconomicEfficiency = Calculator.CalculateEconomicEfficiency(Project);
+                NotifyPropertyChanged("Estimate");
+            }));
+        }
+
+        private CommandImpl calculateConcurrency;
+        public CommandImpl CalculateConcurrency
+        {
+            get => calculateConcurrency ?? (calculateConcurrency = new CommandImpl(obj =>
+            {
+                CompetitivenessWindow cw = new CompetitivenessWindow(Context);
+                cw.ShowDialog();
+                if (cw.Standart == null || cw.Base == null)
+                    return;
+                Estimate.Concurrency = Calculator.CalculateConcurrency(Project, cw.Base, cw.Standart);
+                NotifyPropertyChanged("Estimate");
+            }));
+        }
 
         #endregion Buttons Commands
 
@@ -409,7 +614,7 @@ namespace ProjectEstimate.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        class FunctionChecker
+        public class FunctionChecker
         {
             public FunctionChecker(ProjectInfoViewModel parent, Function item, bool isChecked)
             {
@@ -436,12 +641,14 @@ namespace ProjectEstimate.ViewModels
                     {
                         parent.Project.Functions.Remove(Item);
                         parent.Project.LOC -= Item.LOC;
+                        isChecked = false;
                     }
+                    parent.NotifyPropertyChanged("Project");
                 }
             }
         }
 
-        class FeatureChecker
+        public class FeatureChecker
         {
             public FeatureChecker(ProjectInfoViewModel parent, Feature item, bool isChecked)
             {
@@ -468,6 +675,7 @@ namespace ProjectEstimate.ViewModels
                     else
                     {
                         parent.Project.Features.Remove(Item);
+                        isChecked = false;
                     }
                     CalculateCategory();
                 }
@@ -483,10 +691,11 @@ namespace ProjectEstimate.ViewModels
                 if (parent.Project.Features.Where(f => f.Category == 1).Any())
                     category = 1;
                 parent.Project.Category = category;
+                parent.NotifyPropertyChanged("Project");
             }
         }
 
-        class ExtraFeatureChecker
+        public class ExtraFeatureChecker
         {
             public ExtraFeatureChecker(ProjectInfoViewModel parent, ExtraFeature item, bool isChecked)
             {
@@ -513,6 +722,7 @@ namespace ProjectEstimate.ViewModels
                     else
                     {
                         parent.Project.ExtraFeatures.Remove(Item);
+                        isChecked = false;
                     }
                 }
             }

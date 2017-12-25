@@ -17,9 +17,10 @@ namespace ProjectEstimate.Mongo
 
         public double Coefficient { get; set; }
 
-        public bool Equals(ExtraFeature other)
+        public override bool Equals(object other)
         {
-            if (this.Id == other.Id)
+            ExtraFeature extraFeature = other as ExtraFeature;
+            if (this.Id == extraFeature.Id)
             {
                 return true;
             }
@@ -27,6 +28,11 @@ namespace ProjectEstimate.Mongo
             {
                 return false;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 
