@@ -30,7 +30,12 @@ namespace ProjectEstimate.Utils
         public static double CalculateLaboriousness(Project project)
         {
             double labourNormal;
-            int functionSum = project.LOC;
+            int functionSum = 0;
+            foreach (var item in project.Functions)
+            {
+                functionSum += item.LOC;
+            }
+            project.LOC = functionSum;
 
             switch (project.Category)
             {
@@ -77,12 +82,12 @@ namespace ProjectEstimate.Utils
                     break;
             }
 
-            return Math.Round(labourNormal * k);
+            return Math.Round((labourNormal * k) * 10) / 10;
         }
 
         public static int CalculateExecutorsQuantity(Project project)
         {
-            return (int)Math.Round(CalculateLaboriousness(project) / (22 * 6));
+            return (int)Math.Round((CalculateLaboriousness(project) / (22 * 6)) * 10) / 10;
         }
 
         public static double CalculateConcurrency(Project newProject, Project baseProject, Project standartProject)

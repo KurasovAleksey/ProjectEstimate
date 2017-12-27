@@ -45,7 +45,7 @@ namespace ProjectEstimate.ViewModels
             set
             {
                 projectsListInfo = value;
-                OnPropertyChanged("ProjectListInfo");
+                OnPropertyChanged("ProjectsListInfo");
             }
         }
 

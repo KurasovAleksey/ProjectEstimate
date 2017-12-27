@@ -588,6 +588,10 @@ namespace ProjectEstimate.ViewModels
             get => calculateEfficiency ?? (calculateEfficiency = new CommandImpl(obj =>
             {
                 Estimate.EconomicEfficiency = Calculator.CalculateEconomicEfficiency(Project);
+                if (Estimate.EconomicEfficiency < 0.15)
+                    MessageBox.Show("Производство и внедрение нового ПО не эффективно - К эффективности меньше 0.15", "Результат");
+                else
+                    MessageBox.Show("Производство и внедрение нового ПО эффективно - К эффективности больше или равен 0.15", "Результат");
                 NotifyPropertyChanged("Estimate");
             }));
         }
@@ -602,6 +606,10 @@ namespace ProjectEstimate.ViewModels
                 if (cw.Standart == null || cw.Base == null)
                     return;
                 Estimate.Concurrency = Calculator.CalculateConcurrency(Project, cw.Base, cw.Standart);
+                if (Estimate.Concurrency < 1.0)
+                    MessageBox.Show("Проект не конкурентоспособен", "Результат");
+                else
+                    MessageBox.Show("Проект конкурентоспособен", "Результат");
                 NotifyPropertyChanged("Estimate");
             }));
         }

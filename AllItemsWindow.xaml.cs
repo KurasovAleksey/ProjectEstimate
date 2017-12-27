@@ -30,5 +30,10 @@ namespace ProjectEstimate
             DataContext = viewModel;
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Программа разработана студентом группы КН-34г Курасовым Алексеем", "О программе");
+        }
+
     }
 }

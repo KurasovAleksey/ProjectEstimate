@@ -12,7 +12,10 @@
                 <MenuItem Command="{Binding AddNewProject}" Header="Новый проект"/>
                 <MenuItem Command="{Binding CloseStateCommand}" Header="Закрыть"/>
             </MenuItem>
-            
+            <MenuItem Header="О программе" Click="MenuItem_Click">
+
+            </MenuItem>
+
         </Menu>
         <StackPanel DockPanel.Dock="Bottom">
             <DataGrid Name="ProjectsDataGrid" HorizontalAlignment="Stretch" 
@@ -20,7 +23,7 @@
                       ItemsSource = "{Binding ProjectsListInfo}" 
                       SelectedItem ="{Binding SelectedItem}"
                       AutoGenerateColumns="False"
-                      CanUserAddRows="False" CanUserDeleteRows="False">
+                      CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Binding="{Binding Title }" Width="*"/>
                 <DataGridTextColumn Header="ПрО" Binding="{Binding ApplicationDomain }" Width="*"/>

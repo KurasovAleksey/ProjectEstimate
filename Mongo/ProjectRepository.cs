@@ -35,11 +35,18 @@ namespace ProjectEstimate.Mongo
 
         public void UpsertProject(Project project)
         {
+            if (project.StartingDate > project.Deadline)
+                throw new Exception("Некорректный ввод дат");
+            if (String.IsNullOrWhiteSpace(project.Title))
+                throw new Exception("Введите название проекта");
             if (project.Id == null)
                  _context.Projects.InsertOne(project, null);
             else
-             _context.Projects.ReplaceOne(new BsonDocument("Title", project.Title),
-                 project, new UpdateOptions() { IsUpsert = true });
+            {
+                var filter = Builders<Project>.Filter.Eq("Id", project.Id);
+                _context.Projects.DeleteOne(filter);
+                _context.Projects.InsertOne(project, null);
+            }
         }
 
         public DeleteResult RemoveProject(string id)
